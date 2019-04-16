@@ -1,2 +1,1 @@
-# krpaimanja
-manja manja gimana gitu
+# GREEN SPIRIT 2.0
