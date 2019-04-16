@@ -4,16 +4,16 @@ Robot Pemadam Api untuk KRI 2019 cabang KRPAI
 ## TEAM DEVELOPER
 ### Tim Inti
 1. Yasmin Salamah ([@yasminda19](https://github.com/yasminda19))
-2. -
+2. Lorem
 
 ### Tim Pendukung
-1. -
-2. -
-3. -
+1. Lorem
+2. Lorem
+3. Lorem
 
-## Development Tools
+## Development IDE
 1. Arduino
 
 ## Materials 
-1.
-2.
+1. Lorem
+2. Lorem
