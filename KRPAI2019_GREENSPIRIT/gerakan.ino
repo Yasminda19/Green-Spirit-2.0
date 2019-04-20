@@ -129,74 +129,117 @@ void maju2() {
 void maju3() {
    myservo.setVelocity(150);
   angkat1();
+  updatestate();
   turun3();
+  updatestate();
   angkat5();
 
   turun2();
+  updatestate();
   angkat4();
+  updatestate();
   turun6();
   delay(100);
-  myservo.write( 61, 80); //pasangan 1
+  updatestate();
+  myservo.write( 61, 80);
+  updatestate();//pasangan 1
   myservo.write( 41, 50); //pasangan 3
+  updatestate();
   myservo.write( 21, 70); // pasangan 5
-
+updatestate();
   myservo.write( 51, 65);
+  updatestate();
   myservo.write( 31, 45);
+  updatestate();
   myservo.write( 11, 70);
   delay(100);
+  updatestate();
   angkat3();
+  updatestate();
   turun1();
+  updatestate();
   turun5();
 
   angkat2();
+  updatestate();
   turun4();
+  updatestate();
   angkat6();
   delay(100);
+  updatestate();
   myservo.write( 61, 55); //pasangan 1
+  updatestate();
   myservo.write( 41, 70); //pasangan 3
+  updatestate();
   myservo.write( 21, 60); // pasangan 5
-
+updatestate();
   myservo.write( 51, 40);
+  updatestate();
   myservo.write( 31, 75);
+  updatestate();
   myservo.write( 11, 50);
+  updatestate();
   delay(100);
+  updatestate();
 
 }
 
 void maju4() {
-   myservo.setVelocity(150);
+  myservo.setVelocity(150);
   angkat1();
+  updatestate();
   turun3();
+  updatestate();
   angkat5();
-
+updatestate();
   turun2();
+  updatestate();
   angkat4();
+  updatestate();
   turun6();
   delay(100);
+  updatestate();
   myservo.write( 61, 80); //pasangan 1
-  myservo.write( 41, 50); //pasangan 3
+  updatestate();
+  myservo.write( 41, 65); //pasangan 3
+  updatestate();
   myservo.write( 21, 70); // pasangan 5
-
+updatestate();
   myservo.write( 51, 65);
-  myservo.write( 31, 45);
+  updatestate();
+  myservo.write( 31, 50);
+  updatestate();
   myservo.write( 11, 70);
+  updatestate();
   delay(100);
+  updatestate();
   angkat3();
+  updatestate();
   turun1();
+  updatestate();
   turun5();
-
+updatestate();
   angkat2();
+  updatestate();
   turun4();
+  updatestate();
   angkat6();
   delay(100);
-  myservo.write( 61, 60); //pasangan 1
-  myservo.write( 41, 70); //pasangan 3
-  myservo.write( 21, 60); // pasangan 5
+  updatestate();
+  myservo.write( 61, 60);
+  updatestate();//pasangan 1
+  myservo.write( 41, 75); 
+  updatestate();//pasangan 3
+  myservo.write( 21, 60); 
+  updatestate();// pasangan 5
 
-  myservo.write( 51, 37);
-  myservo.write( 31, 75);
-  myservo.write( 11, 47);
+  myservo.write( 51, 40);
+  updatestate();
+  myservo.write( 31, 80);
+  updatestate();
+  myservo.write( 11, 50);
   delay(100);
+  updatestate();
 
 }
 

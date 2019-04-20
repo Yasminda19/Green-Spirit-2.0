@@ -63,7 +63,7 @@ void bacasensor () {
   bacaserongkiri();
   bacakanan();
   bacaserongkanan();
-  nilaijarak();
+ // nilaijarak();
 
 }
 
