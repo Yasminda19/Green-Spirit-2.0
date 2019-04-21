@@ -1,6 +1,11 @@
 #include <SPI.h>
 #include <ServoCds56.h>
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_LSM303_U.h>
 ServoCds56 myservo;
+Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12345);
+
 
 int duration;                                                          //Stores duration of pulse in
 int distancekanan;
@@ -8,6 +13,9 @@ int distancekiri;
 int distancedepan = 100;
 int distancekanan1;
 int distancekiri1;
+float x_sementara ;
+float y_sementara ;
+
 int nilaisensorgaris;
 int countline = 0;
 int relay = 3;
@@ -29,6 +37,7 @@ boolean ceksensorgaris = true ;
 void setup () {
   Serial.begin (115200);
   myservo.begin ();
+  mag.enableAutoRange(true);
   berdiri();
   delay(300);
   berdiri();
@@ -39,13 +48,19 @@ void setup () {
   delay(300);
   digitalWrite(voltPINlinesensor, HIGH);
   myservo.setVelocity(150);
+  if (!mag.begin())
+  {
+    /* There was a problem detecting the LSM303 ... check your connections */
+    Serial.println("Ooops, no LSM303 detected ... Check your wiring!");
+    //while(1);
+  }
   delay(3000);
 }
 //-----------------------------------------------------------------------------
 void loop() {
   delay(1);
   bacasensor();
-  int range = map(distancedepan, 40, 0, 1, 2);
+  cekarah();
   jalan();
 
 
@@ -93,24 +108,39 @@ void jalan() {
     delay(1000);
     bacasensor();
     if (distancekiri >= 25) {
+      cekarah();
+      int x_awal = x_sementara ;
       for (int i = 1; i < 6 ; i++) {
         belokkiri15(); //belok kiri 90
         //  bacasensor();
       }
+      cekarah();
+      if (abs(abs(x_awal) - abs(x_sementara)) < 20 ) {
+        belokkiri15();
+        cekarah();
+      }
+
     }
     else if (distancekiri < 25) {
       if (distancekanan > 20) {
+        cekarah();
         for (int i = 1; i < 6 ; i++) {
           belokkanan15(); //belok kiri 90
           // bacasensor();
         }
+        if (abs(abs(x_awal) - abs(x_sementara)) < 20 ) {
+          belokkiri15();
+          cekarah();
+        }
         bacasensor();
+
+
       }
-      else {
-        for (int i = 1; i < 11 ; i++) {
+      else {  putarpresisi();
+      /*  for (int i = 1; i < 11 ; i++) {
           belokkanan15(); //belok kiri 90
           // bacasensor();
-        }
+        } */
         bacasensor();
       }
 
