@@ -78,15 +78,44 @@ void cekarah () {
   mag.getEvent(&event);
 x_sementara = event.magnetic.x ;
 y_sementara = event.magnetic.y ;
-  Serial.print("X: "); Serial.print(x_sementara); Serial.print("  ");
-  Serial.print("Y: "); Serial.print(event.magnetic.y); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(event.magnetic.z);
-  Serial.print("  ");Serial.println("uT");
-  
-  Serial.print("X Raw: "); Serial.print(mag.raw.x); Serial.print("  ");
-  Serial.print("Y Raw: "); Serial.print(mag.raw.y); Serial.print("  ");
-  Serial.print("Z Raw: "); Serial.print(mag.raw.z); Serial.println("");
-  delay(10);
+ // Serial.print("X: "); Serial.print(x_sementara); Serial.print("  ");
+ // Serial.print("Y: "); Serial.print(event.magnetic.y); Serial.print("  ");
+ // Serial.print("Z: "); Serial.print(event.magnetic.z);
+//  Serial.print("  ");Serial.println("uT");
+   heading = atan2(x_sementara, y_sementara) /0.0174532925; //Calculate the degree using X and Y parameters with this formulae 
+
+ //Convert result into 0 to 360
+  if(heading < 0) 
+  heading+=360;
+  heading = 360-heading;
+//  Serial.print("X Raw: "); Serial.print(mag.raw.x); Serial.print("  ");
+//  Serial.print("Y Raw: "); Serial.print(mag.raw.y); Serial.print("  ");
+//  Serial.print("Z Raw: "); Serial.print(mag.raw.z); Serial.println("");
+//  delay(10);
   //myservo.begin ();
   
   }
+
+void setnilaiawal() {
+  if (heading <= batas_atas_u && heading >= batas_bawah_u ) {
+        arah = UTARA; //1 atau 5
+        kondisiawal = false;
+      }
+      else if (heading <= batas_atas_b && heading >= batas_bawah_b ) {
+        arah = BARAT;//4 atau 0
+        kondisiawal = false;
+      }
+      else if (heading <= batas_atas_t && heading >= batas_bawah_t ) {
+        arah = TIMUR;//2
+        kondisiawal = false;
+      }
+      else if (heading <= batas_atas_s && heading >= batas_bawah_s ) {
+        arah = SELATAN;//3
+        kondisiawal = false;
+      }
+      else {
+        belokkanan15();
+      }
+  
+  
+  }  

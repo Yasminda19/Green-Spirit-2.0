@@ -70,12 +70,12 @@ void bacasensor () {
 void ceksensor() {
   bacakiri();
   if (distancekiri < 5 ) {
-    belokkanan18();
+    belokkanan15();
     distancekiri = 10;
   }
   bacakanan();
   if (distancekanan < 5 ) {
-    belokkiri18();
+    belokkiri15();
     distancekanan = 10;
   }
   delay(5);
@@ -85,7 +85,7 @@ void ceksensor() {
 void cekdepan() {
   bacadepan();
   if (distancedepan < 70) {
-    maju2();
+    maju3();
 
   }
 }

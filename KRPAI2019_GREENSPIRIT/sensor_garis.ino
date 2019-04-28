@@ -16,11 +16,19 @@ if (ceksensorgaris) {
         countline =  1;
         delay(3000);
         ruangan = false;
+        rumah = false;
+        cekarah();
+        if (orientasi) {
+          orientasi_x_awal = x_sementara;
+          orientasi_y_awal = y_sementara;
+          orientasi = false;
+          }
       }
       else if (ruangan == false) {
         countline =  1;
         delay(6000);
         ruangan = true;
+       // cari_api();
         
         }
     }
@@ -29,7 +37,20 @@ if (ceksensorgaris) {
   else if (countline == 1) {
     if (nilaisensorgaris == 1) {
       ceksensorgaris = false;
+      
       maju3();
+      if (distancedepan < 6) {
+      maju3();
+      bacasensor();
+      }
+     if (distancedepan < 6) {
+      maju3();
+      bacasensor();
+      }
+      if (distancedepan < 6) {
+      maju3();
+      bacasensor();
+      }
       ceksensorgaris = true;
       
       }
