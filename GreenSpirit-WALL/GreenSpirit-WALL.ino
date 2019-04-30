@@ -1,12 +1,5 @@
 #include "DynamixelSerial/DynamixelSerial.h"
 
-#define FireSensor1 A3
-#define FireSensor2 A4
-#define FireSensor3 A5
-#define FireSensor4 A6
-#define FireSensor5 A7
-// Fire or Not
-
 #include <SPI.h>
 #include <ServoCds56.h>
 #include <Wire.h>
@@ -15,8 +8,7 @@
 ServoCds56 myservo;
 Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12345);
 
-// --------------------- SETUP UNTUK PID ----------------------------------//
-
+/* TOLONG DI SET PIN NYA
 
 // --------------------- SETUP UNTUK TRIGONOMETRI --------------------------//
 float R,R1,r; // in milimeter
@@ -66,7 +58,7 @@ Servo servo1;
 int servangle;// servo angle variable
 int FireSensorPins[] = {3,4,5,6,7};          // 
 /*int FireSensorPrevLow[] = {1,1,1,1,1};     // previously low flag set to true
-int FireSensorUsed[]  = {0,0,0,0,0};*/     // previously used before going low
+int FireSensorUsed[]  = {0,0,0,0,0};    // previously used before going low
 int currentFireSensorPin = 0; 
 int SensorPin = 3; 
 int ledPin = 13; //led to signal the calibration
@@ -78,7 +70,9 @@ int FireSensor1,FireSensor2,FireSensor3,FireSensor4,FireSensor5;
 
 
 int servoNum = 3;
-char inputCommand;                  // a string to hold incoming data
+char inputCommand;
+*/        
+
 // --------------------- SETUP UNTUK SENSOR GARIS ----------------------//
 boolean
 ruangan = true;
@@ -180,7 +174,7 @@ Alpa[6]= (240 - alpa)/300*1024;
 // 3 atas
 }
 
-void jalan() {
+
 //----------------------------------- BELOK ---------------------------------------------------// 
 void belokkananpresisi() {
   cekarah();
@@ -216,7 +210,6 @@ Serial.println(abs(abs(y_awal) - abs(y_sementara)));
       Serial.println("tambah 1");
       cekarah();
       }
-  }
 
 void putarpresisi() {
 
@@ -256,6 +249,7 @@ void putarpresisi() {
   }
 
   }
+
 void cekarah () {
  // myservo.end();
 
