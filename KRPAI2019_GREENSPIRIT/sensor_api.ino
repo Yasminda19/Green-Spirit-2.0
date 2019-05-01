@@ -67,6 +67,13 @@ for (int c = 0; c < 150 ; c++) {
  // Serial.println(arahangle);
   }
    myservo.write( 100, arahangle);
-  
-  
+  if (arahangle < 30) {
+    belokkanan15();
+    scan_api();
+    }
+    
+  else if (arahangle > 110) {
+    belokkiri15();
+    scan_api();
+    }
   } 

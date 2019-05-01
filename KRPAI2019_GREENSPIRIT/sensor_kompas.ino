@@ -1,35 +1,70 @@
 void belokkananpresisi() {
-  
   cekarah();
-  int x_awal = x_sementara ;
-  Serial.println(" ");
-  Serial.print("x awal  : ");
-  Serial.println (x_awal);
-  while (abs(abs(x_awal) - abs(x_sementara)) < 15 ) {
+  setnilaiawal();
+  
+   if (arah == UTARA) {
+          while (heading > batas_atas_t || heading < batas_bawah_t ) {
+    belokkanan15();
+    cekarah();
+    if (heading > batas_atas_t) {
+      belokkiri15();
+      }
+    }
+        //  cekarah();
+        }
+        else if (arah == TIMUR) {
+           while (heading > batas_atas_s || heading < batas_bawah_s ) {
     belokkanan15();
     cekarah();
     }
+        }
+   else if (arah == SELATAN) {
+      while (heading > batas_atas_b || heading < batas_bawah_b ) {
+    belokkanan15();
+    cekarah();
+    }
+    }
+        else if (arah == BARAT) {
+          while (heading > batas_atas_u || heading < batas_bawah_u ) {
+    belokkanan15();
+    cekarah();
+    }
+        }
+  
   }
 void belokkiripresisi() {
-  
   cekarah();
-  int x_awal = x_sementara ;
-  int y_awal = y_sementara ;
-  Serial.println(" ");
-  Serial.print("y awal  : ");
-  Serial.println (y_awal);
-  Serial.println (" ");
-  do {
+  setnilaiawal();
+  
+   if (arah == UTARA) {
+          while (heading > batas_atas_b || heading < batas_bawah_b ) {
     belokkiri15();
     cekarah();
-    } while (abs(abs(y_awal) - abs(y_sementara)) < 15 ) ;
-Serial.print("selisih : ");
-Serial.println(abs(abs(y_awal) - abs(y_sementara)));
-    if (abs(abs(x_awal) - abs(x_sementara)) < 15) {
-      belokkiri15();
-      Serial.println("tambah 1");
-      cekarah();
+    if (heading < batas_atas_b) {
+      belokkanan15();
       }
+    }
+        //  cekarah();
+        }
+        else if (arah == TIMUR) {
+           while (heading > batas_atas_u || heading < batas_bawah_u ) {
+    belokkiri15();
+    cekarah();
+    }
+        }
+   else if (arah == SELATAN) {
+      while (heading > batas_atas_t || heading < batas_bawah_t ) {
+    belokkiri15();
+    cekarah();
+    }
+    }
+        else if (arah == BARAT) {
+          while (heading > batas_atas_s || heading < batas_bawah_s ) {
+    belokkiri15();
+    cekarah();
+    }
+        }
+  
   }
 
 void putarpresisi() {
@@ -97,24 +132,45 @@ y_sementara = event.magnetic.y ;
   }
 
 void setnilaiawal() {
-  if (heading <= batas_atas_u && heading >= batas_bawah_u ) {
+  if (heading <= (batas_atas_u + 10) && heading >= (batas_bawah_u -20) ) {
         arah = UTARA; //1 atau 5
         kondisiawal = false;
+    digitalWrite(lampu5,HIGH);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
       }
-      else if (heading <= batas_atas_b && heading >= batas_bawah_b ) {
+      else if (heading <= (batas_atas_b +10) && heading >= (batas_bawah_b-20) ) {
         arah = BARAT;//4 atau 0
         kondisiawal = false;
+        
+    digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,HIGH);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
       }
-      else if (heading <= batas_atas_t && heading >= batas_bawah_t ) {
+      else if (heading <= (batas_atas_t+10) && heading >= (batas_bawah_t-20) ) {
         arah = TIMUR;//2
         kondisiawal = false;
+        digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,HIGH);
+    digitalWrite(lampu8,LOW);
+    
       }
-      else if (heading <= batas_atas_s && heading >= batas_bawah_s ) {
+      else if (heading <= (batas_atas_s+10) && heading >= (batas_bawah_s-20) ) {
         arah = SELATAN;//3
         kondisiawal = false;
+        digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,HIGH);
+    
       }
       else {
         belokkanan15();
+        cekarah();
+        setnilaiawal();
       }
   
   

@@ -19,6 +19,7 @@ if (ceksensorgaris) {
         rumah = false;
         cekarah();
         if (orientasi) {
+          setnilaiawal();
           orientasi_x_awal = x_sementara;
           orientasi_y_awal = y_sementara;
           orientasi = false;

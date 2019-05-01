@@ -24,6 +24,17 @@ float orientasi_x_awal ;
 float orientasi_y_awal ;
 int jumlahruangan;
 int heading;
+// LED
+int lampu1 = 32;
+int lampu2 = 34;
+int lampu3 = 36;
+int lampu4 = 38;
+int lampu5 = 33;
+int lampu6 = 35;
+int lampu7 = 37;
+int lampu8 = 39;
+//---------------------
+
 
 //sensor kompas---------------------
 int batas_atas_u = 170 ;
@@ -36,7 +47,7 @@ int batas_atas_t = 270  ;
 int batas_bawah_t = 250 ;
 
 //--------------------------------
-int maze[100];
+int maze[200];
 int pulang[100];
 int i = 0;
 
@@ -64,7 +75,7 @@ boolean kondisiawal = true;
 int arah;
 boolean mulai_jalan = true;
 int jumlahbelokan = 0;
-
+int audio = 0;
 
 void setup () {
   Serial.begin (115200);
@@ -83,6 +94,14 @@ void setup () {
   delay(300);
   digitalWrite(voltPINlinesensor, HIGH);
   pinMode(waterRelay, OUTPUT);
+  pinMode(lampu1, OUTPUT);
+pinMode(lampu2, OUTPUT);
+pinMode(lampu3, OUTPUT);
+pinMode(lampu4, OUTPUT);
+pinMode(lampu5, OUTPUT);
+pinMode(lampu6, OUTPUT);
+pinMode(lampu7, OUTPUT);
+pinMode(lampu8, OUTPUT);
   digitalWrite(waterRelay, HIGH);
   myservo.setVelocity(150);
   if (!mag.begin())
@@ -91,7 +110,14 @@ void setup () {
     Serial.println("Ooops, no LSM303 detected ... Check your wiring!");
     //while(1);
   }
-  delay(3000);
+/* while (audio < 5) {
+  if (analogRead(5) < 10) {
+    audio = audio +1;
+    }
+  delay(200);
+  } */
+  
+  delay(300);
 }
 //-----------------------------------------------------------------------------
 void loop() {
@@ -202,15 +228,17 @@ void telusur_kiri() {
       setnilaiawal();
       //
    }
-
+belokkekanan();
     //kodingan di labirin
-    belokkekiri();
+ //   belokkekiri();
   //  jalanmaju();
+jalanmaju3();
+jalanmaju3();
 
-
-
-    belokkekanan();
-    jalanmaju2();
+  belokkekiri();
+   // belokkekanan();
+    jalanmaju3();
+    jalanmaju3();
     putarbalik();
 
   }
@@ -312,6 +340,10 @@ void jalanmaju () {
 
 void jalanmaju2 () {
   if (distancedepan > 14) {
+    digitalWrite(lampu1,LOW);
+    digitalWrite(lampu2,HIGH);
+    digitalWrite(lampu3,HIGH);
+    digitalWrite(lampu4,LOW);
     if ((distancekiri - distancekanan) >= 0) {
       maju3();
     }
@@ -404,12 +436,124 @@ void jalanmaju2 () {
   }
 }
 
+void jalanmaju3 () {
+  if (distancedepan > 7) {
+    digitalWrite(lampu1,LOW);
+    digitalWrite(lampu2,HIGH);
+    digitalWrite(lampu3,HIGH);
+    digitalWrite(lampu4,LOW);
+    if ((distancekiri - distancekanan) >= 0) {
+      maju3();
+      maju3();
+    }
+    else if ((distancekiri - distancekanan) < 0) {
+      maju4();
+      maju4();
+    }
+   /* if (distancekiri < 5) {
+      geserkanan();
+    }
+    else if (distancekanan < 6 && distancekanan > 0) {
+      geserkiri();
+    }
+    else if (distancekanan1 < 6) {
+      mundur();
+      belokkiri15();
+      belokkiri15();
+      bacasensor();
+    }
+    */
+    bacasensor();
+    /* if (distancedepan > 14) {
+       if ((distancekiri - distancekanan) >= 0) {
+         maju3();
+       }
+       else if ((distancekiri - distancekanan) < 0) {
+         maju4();
+       }
+      } */
+
+      /*
+    if (distancekiri < 5) {
+      geserkanan();
+    }
+    else if (distancekanan < 6 && distancekanan > 0) {
+      geserkiri();
+    }
+    else if (distancekanan1 < 6) {
+      mundur();
+      belokkiri15();
+      belokkiri15();
+
+    }
+    else if (distancekiri1 <= 6 && distancekiri1 > 0 ) {
+      mundur();
+      belokkanan15();
+      belokkanan15();
+
+    } */
+    
+    if (mulai_jalan) {
+      maze[i] = arah ;
+      i = i + 1;
+      mulai_jalan = false;
+    }
+    else if (mulai_jalan == false) {
+      maze[i] = maze[i - 1] ;
+      i = i + 1;
+
+    }
+   cekarah();
+    if (arah == UTARA && heading >= batas_atas_u  ) {
+          belokkiri15();
+          cekarah();
+        }
+        else if (arah == TIMUR && heading >= batas_atas_t  ) {
+          belokkiri15();
+          cekarah();
+        }
+        else if (arah == SELATAN && heading >= batas_atas_s  ) {
+          belokkiri15();
+          cekarah();
+        }
+        else if (arah == BARAT && heading >= batas_atas_b  ) {
+          belokkiri15();
+          cekarah();
+        }
+    if (arah == UTARA && heading <= batas_bawah_u  ) {
+        belokkanan15();
+        cekarah();
+      }
+      else if (arah == TIMUR && heading <= batas_bawah_t  ) {
+        belokkanan15();
+        cekarah();
+      }
+      else if (arah == SELATAN && heading <= batas_bawah_s  ) {
+        belokkanan15();
+        cekarah();
+      }
+      else if (arah == BARAT && heading <= batas_bawah_b  ) {
+        belokkanan15();
+        cekarah();
+      }    
+    bacasensor();
+  }
+}
+
   void belokkekiri() {
     if (jumlahbelokan < 3 ) {
       if (distancekiri >= 25) {
         jumlahbelokan = jumlahbelokan + 1;
         cekarah();
         int x_awal = x_sementara ;
+        
+    digitalWrite(lampu1,LOW);
+    digitalWrite(lampu2,LOW);
+    digitalWrite(lampu3,LOW);
+    digitalWrite(lampu4,HIGH);
+    jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
         for (int i = 1; i < 6 ; i++) {
           belokkiri15(); //belok kiri 90
           //  bacasensor();
@@ -435,27 +579,50 @@ void jalanmaju2 () {
           maze[i] = 4;
           i = i + 1;
           arah = BARAT;
+          digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,HIGH);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
+    
         }
         else if (maze[i - 1] == 2) {
           maze[i] = 1;
           i = i + 1;
           arah = UTARA;
+          digitalWrite(lampu5,HIGH);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
+    
         }
         else if (maze[i - 1] == 3) {
           maze[i] = 2;
           i = i + 1;
           arah = TIMUR;
+    digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,HIGH);
+    digitalWrite(lampu8,LOW);
+    
         }
         else if (maze[i - 1] == 4) {
           maze[i] = 3;
           i = i + 1;
           arah = SELATAN;
+    digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,HIGH);
+    
         }
-      jalanmaju2();
-      jalanmaju2();
-      jalanmaju2();
-      jalanmaju2();
-      
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
       }
       bacasensor();
     }
@@ -485,6 +652,14 @@ void jalanmaju2 () {
     if (distancekanan >= 25) {
       cekarah();
       int x_awal = x_sementara ;
+      
+    digitalWrite(lampu1,HIGH);
+    digitalWrite(lampu2,LOW);
+    digitalWrite(lampu3,LOW);
+    digitalWrite(lampu4,LOW);
+    jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
       for (int i = 1; i < 6 ; i++) {
         belokkanan15(); //belok kiri 90
         //  bacasensor();
@@ -510,27 +685,47 @@ void jalanmaju2 () {
         maze[i] = 2;
         i = i + 1;
         arah = TIMUR;
+    digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,HIGH);
+    digitalWrite(lampu8,LOW);
       }
       else if (maze[i - 1] == 2) {
         maze[i] = 3;
         i = i + 1;
         arah = SELATAN ;
+         digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,HIGH);
       }
       else if (maze[i - 1] == 3) {
         maze[i] = 4;
         i = i + 1;
         arah = BARAT;
+        digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,HIGH);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
       }
       else if (maze[i - 1] == 4) {
         maze[i] = 1;
         i = i + 1;
         arah = UTARA ;
+    digitalWrite(lampu5,HIGH);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
       }
     
-      jalanmaju2();
-      jalanmaju2();
-      jalanmaju2();
-      jalanmaju2();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
+      jalanmaju3();
     
     }
 
@@ -540,6 +735,11 @@ void jalanmaju2 () {
   void putarbalik() {
     bacasensor();
     if (distancedepan <= 14 && distancekiri < 25 && distancekanan < 20) {
+      
+    digitalWrite(lampu1,LOW);
+    digitalWrite(lampu2,HIGH);
+    digitalWrite(lampu3,HIGH);
+    digitalWrite(lampu4,HIGH);
       for (int i = 1; i < 11 ; i++) {
         belokkanan15(); //belok kiri 90
         //
@@ -585,21 +785,37 @@ void jalanmaju2 () {
         maze[i] = 3;
         i = i + 1;
         arah = SELATAN;
+    digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,HIGH);
       }
       else if (maze[i - 1] == 2) {
         maze[i] = 4;
         i = i + 1;
         arah = BARAT ;
+    digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,HIGH);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
       }
       else if (maze[i - 1] == 3) {
         maze[i] = 1;
         i = i + 1;
         arah = UTARA ;
+    digitalWrite(lampu5,HIGH);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,LOW);
+    digitalWrite(lampu8,LOW);
       }
       else if (maze[i - 1] == 4) {
         maze[i] = 2;
         i = i + 1;
         arah = TIMUR ;
+    digitalWrite(lampu5,LOW);
+    digitalWrite(lampu6,LOW);
+    digitalWrite(lampu7,HIGH);
+    digitalWrite(lampu8,LOW);
       }
 
 
