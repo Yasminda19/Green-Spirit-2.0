@@ -447,15 +447,3 @@ y_sementara = event.magnetic.y ;
   //myservo.begin ();
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
